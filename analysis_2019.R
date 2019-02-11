@@ -109,68 +109,108 @@ sal1<-read.csv("H:/0_HarrisLab/1_CURRENT PROJECT FOLDERS/Dominion/01_new_dominio
 sal_names<-c("datetime", "conductivity", "temperature", "sp_cond", "salinity")
 sal1<-sal1[-c(1:2),-1]
 colnames(sal1)<-sal_names
+sal1$datetime <- mdy_hms(sal1$datetime)
 View(sal1)
 
 sal2<-read.csv("H:/0_HarrisLab/1_CURRENT PROJECT FOLDERS/Dominion/01_new_dominion/surveys/hobo/data/2018/csv/sal_03_15_2018b.csv", header=FALSE, na.strings="", stringsAsFactors=FALSE)
 sal2<-sal2[-1,-1]
 colnames(sal2)<-sal_names
+sal2$datetime <- mdy_hm(sal2$datetime)
 View(sal2)
 
 sal3<-read.csv("H:/0_HarrisLab/1_CURRENT PROJECT FOLDERS/Dominion/01_new_dominion/surveys/hobo/data/2018/csv/sal_04_23_2018.csv", header=FALSE, na.strings="", stringsAsFactors=FALSE)
 sal3<-sal3[-c(1:2),-1]
 colnames(sal3)<-sal_names
+sal3$datetime <- mdy_hms(sal3$datetime)
 View(sal3)
 
 sal4<-read.csv("H:/0_HarrisLab/1_CURRENT PROJECT FOLDERS/Dominion/01_new_dominion/surveys/hobo/data/2018/csv/sal_05_11_2018.csv", header=FALSE, na.strings="", stringsAsFactors=FALSE)
 sal4<-sal4[-c(1:2),-1]
 colnames(sal4)<-sal_names
+sal4$datetime <- mdy_hms(sal4$datetime)
 View(sal4)
 
 sal5<-read.csv("H:/0_HarrisLab/1_CURRENT PROJECT FOLDERS/Dominion/01_new_dominion/surveys/hobo/data/2018/csv/sal_05_24_2018.csv", header=FALSE, na.strings="", stringsAsFactors=FALSE)
 sal5<-sal5[-c(1:2),-1]
 colnames(sal5)<-sal_names
+sal5$datetime <- mdy_hms(sal5$datetime)
 View(sal5)
 
 sal6<-read.csv("H:/0_HarrisLab/1_CURRENT PROJECT FOLDERS/Dominion/01_new_dominion/surveys/hobo/data/2018/csv/sal_07_02_2018.csv", header=FALSE, na.strings="", stringsAsFactors=FALSE)
 sal6<-sal6[-c(1:2),-1]
 colnames(sal6)<-sal_names
+sal6$datetime <- mdy_hms(sal6$datetime)
 View(sal6)
 
 sal7<-read.csv("H:/0_HarrisLab/1_CURRENT PROJECT FOLDERS/Dominion/01_new_dominion/surveys/hobo/data/2018/csv/sal_09_06_2018.csv", header=FALSE, na.strings="", stringsAsFactors=FALSE)
 sal7<-sal7[-c(1:2),-c(1,7:10)]
 colnames(sal7)<-sal_names
+sal7$datetime <- mdy_hms(sal7$datetime)
 View(sal7)
 
 sal8<-read.csv("H:/0_HarrisLab/1_CURRENT PROJECT FOLDERS/Dominion/01_new_dominion/surveys/hobo/data/2018/csv/sal_09_19_2018.csv", header=FALSE, na.strings="", stringsAsFactors=FALSE)
 sal8<-sal8[-c(1:2),-c(1, 7:10)]
 colnames(sal8)<-sal_names
+sal8$datetime <- mdy_hms(sal8$datetime)
 View(sal8)
 
 sal9<-read.csv("H:/0_HarrisLab/1_CURRENT PROJECT FOLDERS/Dominion/01_new_dominion/surveys/hobo/data/2018/csv/sal_10_04_2018.csv", header=FALSE, na.strings="", stringsAsFactors=FALSE)
 sal9<-sal9[-c(1:2),-1]
 colnames(sal9)<-sal_names
+sal9$datetime <- mdy_hms(sal9$datetime)
 View(sal9)
 
 sal10<-read.csv("H:/0_HarrisLab/1_CURRENT PROJECT FOLDERS/Dominion/01_new_dominion/surveys/hobo/data/2018/csv/sal_10_19_2018.csv", header=FALSE, na.strings="", stringsAsFactors=FALSE)
 sal10<-sal10[-c(1:2),-1]
 colnames(sal10)<-sal_names
+sal10$datetime <- mdy_hms(sal10$datetime)
 View(sal10)
 
 sal11<-read.csv("H:/0_HarrisLab/1_CURRENT PROJECT FOLDERS/Dominion/01_new_dominion/surveys/hobo/data/2018/csv/sal_10_31_2018.csv", header=FALSE, na.strings="", stringsAsFactors=FALSE)
 sal11<-sal11[-c(1:2),-1]
 colnames(sal11)<-sal_names
+sal11$datetime <- mdy_hms(sal11$datetime)
 View(sal11)
 
 sal12<-read.csv("H:/0_HarrisLab/1_CURRENT PROJECT FOLDERS/Dominion/01_new_dominion/surveys/hobo/data/2018/csv/sal_11_19_2018.csv", header=FALSE, na.strings="", stringsAsFactors=FALSE)
 sal12<-sal12[-c(1:2),-1]
 colnames(sal12)<-sal_names
+sal12$datetime <- mdy_hms(sal12$datetime)
 View(sal12)
 
 sal13<-read.csv("H:/0_HarrisLab/1_CURRENT PROJECT FOLDERS/Dominion/01_new_dominion/surveys/hobo/data/2018/csv/sal_01_18_2019.csv", header=FALSE, na.strings="", stringsAsFactors=FALSE)
 sal13<-sal13[-c(1:2),-c(1,8)]
 sal13$datetime<-paste0(sal13$V2, " ", sal13$V3)
 colnames(sal13)<-c("date", "time", "conductivity", "temperature", "sp_cond", "salinity", "datetime")
+sal13$datetime <- mdy_hms(sal13$datetime)
 View(sal13)
+
+sal14<-read.csv("H:/0_HarrisLab/1_CURRENT PROJECT FOLDERS/Dominion/01_new_dominion/surveys/hobo/data/2018/csv/sal_04_03_2018.csv", header=FALSE, na.strings="", stringsAsFactors=FALSE)
+sal14<-sal14[-c(1:2),-1]
+sal14$datetime<-paste0(sal14$V2, " ", sal14$V3)
+colnames(sal14)<-c("date", "time", "conductivity", "temperature", "sp_cond", "salinity", "datetime")
+sal14$datetime <- mdy_hms(sal14$datetime)
+View(sal14)
+
+sal15<-read.csv("H:/0_HarrisLab/1_CURRENT PROJECT FOLDERS/Dominion/01_new_dominion/surveys/hobo/data/2018/csv/sal_2018_08_01.csv", header=FALSE, na.strings="", stringsAsFactors=FALSE)
+sal15<-sal15[-c(1:2),-1]
+sal15$datetime<-paste0(sal15$V2, " ", sal15$V3)
+colnames(sal15)<-c("date", "time", "conductivity", "temperature", "sp_cond", "salinity", "datetime")
+sal15$datetime <- mdy_hms(sal15$datetime)
+View(sal15)
+
+sal16<-read.csv("H:/0_HarrisLab/1_CURRENT PROJECT FOLDERS/Dominion/01_new_dominion/surveys/hobo/data/2018/csv/sal_11_19_2018.csv", header=FALSE, na.strings="", stringsAsFactors=FALSE)
+sal16<-sal16[-c(1:2),-1]
+colnames(sal16)<-sal_names
+sal16$datetime <- mdy_hms(sal16$datetime)
+View(sal16)
+
+sal17<-read.csv("H:/0_HarrisLab/1_CURRENT PROJECT FOLDERS/Dominion/01_new_dominion/surveys/hobo/data/2018/csv/sal_11_30_2018.csv", header=FALSE, na.strings="", stringsAsFactors=FALSE)
+sal17<-sal17[-c(1:2),-1]
+sal17$datetime<-paste0(sal17$V2, " ", sal17$V3)
+colnames(sal17)<-c("date", "time", "conductivity", "temperature", "sp_cond", "salinity", "datetime")
+sal17$datetime <- mdy_hms(sal17$datetime)
+View(sal17)
 
 #####Join HOBO data#####
 hobo_sal<-full_join(sal1,sal2) %>% 
@@ -184,10 +224,14 @@ hobo_sal<-full_join(sal1,sal2) %>%
   full_join(., sal10) %>% 
   full_join(., sal11) %>% 
   full_join(., sal13) %>% 
+  full_join(., sal14) %>% 
+  full_join(., sal15) %>% 
+  full_join(., sal16) %>% 
+  full_join(., sal17) %>% 
   select(-date, -time) #Joins all of the wl data with all columns and removes the date and time columns since they only exist in wl13
 View(hobo_sal)
 saveRDS(hobo_sal, "hobo_sal_2018.rds") #saves this as an r object that can be read in again later (more efficient than csv (the csv file was 4x as big!) for large data files)
-rm(sal1,sal2,sal3,sal4,sal5,sal6,sal7,sal8,sal9,sal10,sal11,sal12,sal13, hobo_sal)
+rm(sal1,sal2,sal3,sal4,sal5,sal6,sal7,sal8,sal9,sal10,sal11,sal12,sal13,sal14,sal15,sal16,sal17, hobo_sal)
 
 #####Join all HOBO data and continue to wrangle####
 hobo1<-readRDS("hobo_wl_2018.rds")
@@ -229,3 +273,4 @@ a<-ggplot(hobo2018, aes(x=datetime))
 b<-a+geom_point(aes(y=depth),color="red")+geom_point(aes(y=salinity), color="blue")+
   scale_x_datetime(limits = as.POSIXct(c("2018-10-01 00:00:00", "2019-01-01 00:00:00")))
 b
+<- 
