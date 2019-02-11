@@ -288,22 +288,7 @@ rm(sal1,sal2,sal3,sal4,sal5,sal6,sal7,sal8,sal9,sal10,sal11,sal12,sal13,sal14,sa
 
 #####Join all HOBO data and continue to wrangle####
 hobo1<-readRDS("hobo_wl_2018.rds")
-hobo1<- hobo1 %>% 
-  separate(., datetime, sep=" ", into = c("date", "time")) %>% 
-  separate(., time, sep = ":", into = c("hours", "min", "sec"))
-hobo1$datetime<-paste0(hobo1$date, " ", hobo1$hours, ":", hobo1$min)
-hobo1$datetime<-mdy_hm(hobo1$datetime)
-hobo1<-hobo1 %>% 
-  select(datetime, kPA, temp, barokPA, depth)
-
 hobo2<-readRDS("hobo_sal_2018.rds")
-hobo2<- hobo2 %>% 
-  separate(., datetime, sep=" ", into = c("date", "time")) %>% 
-  separate(., time, sep = ":", into = c("hours", "min", "sec"))
-hobo2$datetime<-paste0(hobo2$date, " ", hobo2$hours, ":", hobo2$min)
-hobo2$datetime<-mdy_hm(hobo2$datetime)
-hobo2<-hobo2 %>% 
-  select(datetime, conductivity, temperature, sp_cond, salinity)
 
 hobo<-full_join(hobo1,hobo2)
 hobo<- hobo[order(hobo$datetime),]
@@ -323,7 +308,5 @@ saveRDS(hobo2018, "hobo2018.rds")
 
 #####plot for Quick QA purposes#####
 a<-ggplot(hobo2018, aes(x=datetime))
-b<-a+geom_point(aes(y=depth),color="red")+geom_point(aes(y=salinity), color="blue")+
-  scale_x_datetime(limits = as.POSIXct(c("2018-10-01 00:00:00", "2019-01-01 00:00:00")))
+b<-a+geom_point(aes(y=depth),color="red")+geom_point(aes(y=salinity), color="blue")
 b
-<- 
