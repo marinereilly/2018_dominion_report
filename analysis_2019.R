@@ -1,0 +1,231 @@
+####library####
+library(dplyr)
+library(lubridate)
+library(ggplot2)
+library(tidyr)
+library(hablar)
+#####load HOBO Water Level data#####
+#May be missing Nov 19 - Nov 30 Look later
+wl1 <- read.delim("H:/0_HarrisLab/1_CURRENT PROJECT FOLDERS/Dominion/01_new_dominion/surveys/hobo/data/2018/csv/WL_12_19_2017_02_14_2018.csv", header=FALSE, comment.char="#", stringsAsFactors=FALSE)
+wl1<-wl1[-1,-1]
+wl_head<-c("datetime", "kPA", "temp", "barokPA", "depth") #creates a list of column names in the order of the columns
+colnames(wl1)<-wl_head #assigns the columns the names we created above
+wl1$kPA<-as.character(wl1$kPA) #formats for joining purposes
+wl1$temp<-as.character(wl1$temp)
+wl1$barokPA<-as.character(wl1$barokPA)
+wl1$depth<-as.character(wl1$depth)
+View(wl1)
+
+wl2 <- read.csv("H:/0_HarrisLab/1_CURRENT PROJECT FOLDERS/Dominion/01_new_dominion/surveys/hobo/data/2018/csv/CPWeir_02_28_2018.csv", header=FALSE, na.strings="", stringsAsFactors=FALSE)
+wl2<-wl2[-c(1:2),-1] #removes the first two rows and the first column
+colnames(wl2)<-wl_head
+wl2<-wl2[!is.na(wl2$depth),] #removes rows where there is no depth value
+View(wl2)
+
+wl3 <- read.csv("H:/0_HarrisLab/1_CURRENT PROJECT FOLDERS/Dominion/01_new_dominion/surveys/hobo/data/2018/csv/CPWeir_03_15_2018.csv", header=FALSE, na.strings="", stringsAsFactors=FALSE)
+wl3<-wl3[-c(1:2),-1]
+colnames(wl3)<-wl_head
+wl3<-wl3[!is.na(wl3$depth),]
+View(wl3)
+
+wl4 <- read.csv("H:/0_HarrisLab/1_CURRENT PROJECT FOLDERS/Dominion/01_new_dominion/surveys/hobo/data/2018/csv/10051488_CPWeir_04_23_2018.csv", header=FALSE, na.strings="", stringsAsFactors=FALSE)
+wl4<-wl4[-c(1:2),-1]
+colnames(wl4)<-wl_head
+wl4<-wl4[!is.na(wl4$depth),]
+View(wl4)
+
+wl5 <- read.csv("H:/0_HarrisLab/1_CURRENT PROJECT FOLDERS/Dominion/01_new_dominion/surveys/hobo/data/2018/csv/CPWeir_05_11_2018.csv", header=FALSE, na.strings="", stringsAsFactors=FALSE)
+wl5<-wl5[-c(1:2),-1]
+colnames(wl5)<-wl_head
+wl5<-wl5[!is.na(wl5$depth),]
+View(wl5)
+
+wl6 <- read.csv("H:/0_HarrisLab/1_CURRENT PROJECT FOLDERS/Dominion/01_new_dominion/surveys/hobo/data/2018/csv/CPWeir_05_24_2018.csv", header=FALSE, na.strings="", stringsAsFactors=FALSE)
+wl6<-wl6[-c(1:2),-1]
+colnames(wl6)<-wl_head
+wl6<-wl6[!is.na(wl6$depth),]
+View(wl6)
+
+wl7 <- read.csv("H:/0_HarrisLab/1_CURRENT PROJECT FOLDERS/Dominion/01_new_dominion/surveys/hobo/data/2018/csv/CPWeir_07_02_2018.csv", header=FALSE, na.strings="", stringsAsFactors=FALSE)
+wl7<-wl7[-c(1:2),-1]
+colnames(wl7)<-wl_head
+wl7<-wl7[!is.na(wl7$depth),]
+View(wl7)
+
+wl8 <- read.csv("H:/0_HarrisLab/1_CURRENT PROJECT FOLDERS/Dominion/01_new_dominion/surveys/hobo/data/2018/csv/CPWeir_09_06_2018.csv", header=FALSE, na.strings="", stringsAsFactors=FALSE)
+wl8<-wl8[-c(1:2),-c(1,7:10)]
+colnames(wl8)<-wl_head
+View(wl8)
+
+wl9 <- read.csv("H:/0_HarrisLab/1_CURRENT PROJECT FOLDERS/Dominion/01_new_dominion/surveys/hobo/data/2018/csv/CPWeir_09_19_2018.csv", header=FALSE, na.strings="", stringsAsFactors=FALSE)
+wl9<-wl9[-c(1:2),-c(1,7:10)]
+colnames(wl9)<-wl_head
+wl9<-wl9[!is.na(wl9$depth),]
+View(wl9)
+
+wl10 <- read.csv("H:/0_HarrisLab/1_CURRENT PROJECT FOLDERS/Dominion/01_new_dominion/surveys/hobo/data/2018/csv/CPWeir_10_04_2018.csv", header=FALSE, na.strings="", stringsAsFactors=FALSE)
+wl10<-wl10[-c(1:2),-1]
+colnames(wl10)<-wl_head
+View(wl10)
+
+wl11 <- read.csv("H:/0_HarrisLab/1_CURRENT PROJECT FOLDERS/Dominion/01_new_dominion/surveys/hobo/data/2018/csv/2018_10_19_Weir.csv", header=FALSE, na.strings="", stringsAsFactors=FALSE)
+wl11<-wl11[-c(1:2),-1]
+colnames(wl11)<-wl_head
+View(wl11)
+
+wl12 <- read.csv("H:/0_HarrisLab/1_CURRENT PROJECT FOLDERS/Dominion/01_new_dominion/surveys/hobo/data/2018/csv/CPWeir_11_19_2018.csv", header=FALSE, na.strings="", stringsAsFactors=FALSE)
+wl12<-wl12[-c(1:2),-1]
+colnames(wl12)<-wl_head
+View(wl12)
+
+wl13 <- read.csv("H:/0_HarrisLab/1_CURRENT PROJECT FOLDERS/Dominion/01_new_dominion/surveys/hobo/data/2018/csv/CPWeir_01_18_2019.csv", header=FALSE, na.strings="", stringsAsFactors=FALSE)
+wl13<-wl13[-c(1:2),-1]
+wl13$datetime<-paste0(wl13$V2, " ", wl13$V3) #combines the date column and the time column so that it is the same as the other data.  Will probably be separated again during analysis
+colnames(wl13)<-c("date", "time", "kPA", "temp", "barokPA", "depth", "datetime")
+View(wl13)
+#####Join Hobo Water Level Data####
+
+hobo_wl<-full_join(wl1,wl2) %>% 
+  full_join(., wl3) %>% 
+  full_join(., wl4) %>% 
+  full_join(., wl5) %>% 
+  full_join(., wl6) %>% 
+  full_join(., wl7) %>% 
+  full_join(., wl8) %>% 
+  full_join(., wl9) %>% 
+  full_join(., wl10) %>% 
+  full_join(., wl11) %>% 
+  full_join(., wl13) %>% 
+  select(-date, -time) #Joins all of the wl data with all columns and removes the date and time columns since they only exist in wl13
+View(hobo_wl)
+saveRDS(hobo_wl, "hobo_wl_2018.rds") #saves this as an r object that can be read in again later (more efficient than csv (the csv file was 4x as big!) for large data files)
+rm(wl1,wl2,wl3,wl4,wl5,wl6,wl7,wl8,wl9,wl10,wl11,wl12,wl13, hobo_wl) #removes the temporary objects we made from the global environment
+
+#####Load Hobo Water Level Data####
+hobo1<-readRDS("hobo_wl_2018.rds")
+#####Hobo Salinity Data####
+#may be missing January 1 - February 14 - look later
+sal1<-read.csv("H:/0_HarrisLab/1_CURRENT PROJECT FOLDERS/Dominion/01_new_dominion/surveys/hobo/data/2018/csv/sal_02_28_2018.csv", header=FALSE, na.strings="", stringsAsFactors=FALSE)
+sal_names<-c("datetime", "conductivity", "temperature", "sp_cond", "salinity")
+sal1<-sal1[-c(1:2),-1]
+colnames(sal1)<-sal_names
+View(sal1)
+
+sal2<-read.csv("H:/0_HarrisLab/1_CURRENT PROJECT FOLDERS/Dominion/01_new_dominion/surveys/hobo/data/2018/csv/sal_03_15_2018b.csv", header=FALSE, na.strings="", stringsAsFactors=FALSE)
+sal2<-sal2[-1,-1]
+colnames(sal2)<-sal_names
+View(sal2)
+
+sal3<-read.csv("H:/0_HarrisLab/1_CURRENT PROJECT FOLDERS/Dominion/01_new_dominion/surveys/hobo/data/2018/csv/sal_04_23_2018.csv", header=FALSE, na.strings="", stringsAsFactors=FALSE)
+sal3<-sal3[-c(1:2),-1]
+colnames(sal3)<-sal_names
+View(sal3)
+
+sal4<-read.csv("H:/0_HarrisLab/1_CURRENT PROJECT FOLDERS/Dominion/01_new_dominion/surveys/hobo/data/2018/csv/sal_05_11_2018.csv", header=FALSE, na.strings="", stringsAsFactors=FALSE)
+sal4<-sal4[-c(1:2),-1]
+colnames(sal4)<-sal_names
+View(sal4)
+
+sal5<-read.csv("H:/0_HarrisLab/1_CURRENT PROJECT FOLDERS/Dominion/01_new_dominion/surveys/hobo/data/2018/csv/sal_05_24_2018.csv", header=FALSE, na.strings="", stringsAsFactors=FALSE)
+sal5<-sal5[-c(1:2),-1]
+colnames(sal5)<-sal_names
+View(sal5)
+
+sal6<-read.csv("H:/0_HarrisLab/1_CURRENT PROJECT FOLDERS/Dominion/01_new_dominion/surveys/hobo/data/2018/csv/sal_07_02_2018.csv", header=FALSE, na.strings="", stringsAsFactors=FALSE)
+sal6<-sal6[-c(1:2),-1]
+colnames(sal6)<-sal_names
+View(sal6)
+
+sal7<-read.csv("H:/0_HarrisLab/1_CURRENT PROJECT FOLDERS/Dominion/01_new_dominion/surveys/hobo/data/2018/csv/sal_09_06_2018.csv", header=FALSE, na.strings="", stringsAsFactors=FALSE)
+sal7<-sal7[-c(1:2),-c(1,7:10)]
+colnames(sal7)<-sal_names
+View(sal7)
+
+sal8<-read.csv("H:/0_HarrisLab/1_CURRENT PROJECT FOLDERS/Dominion/01_new_dominion/surveys/hobo/data/2018/csv/sal_09_19_2018.csv", header=FALSE, na.strings="", stringsAsFactors=FALSE)
+sal8<-sal8[-c(1:2),-c(1, 7:10)]
+colnames(sal8)<-sal_names
+View(sal8)
+
+sal9<-read.csv("H:/0_HarrisLab/1_CURRENT PROJECT FOLDERS/Dominion/01_new_dominion/surveys/hobo/data/2018/csv/sal_10_04_2018.csv", header=FALSE, na.strings="", stringsAsFactors=FALSE)
+sal9<-sal9[-c(1:2),-1]
+colnames(sal9)<-sal_names
+View(sal9)
+
+sal10<-read.csv("H:/0_HarrisLab/1_CURRENT PROJECT FOLDERS/Dominion/01_new_dominion/surveys/hobo/data/2018/csv/sal_10_19_2018.csv", header=FALSE, na.strings="", stringsAsFactors=FALSE)
+sal10<-sal10[-c(1:2),-1]
+colnames(sal10)<-sal_names
+View(sal10)
+
+sal11<-read.csv("H:/0_HarrisLab/1_CURRENT PROJECT FOLDERS/Dominion/01_new_dominion/surveys/hobo/data/2018/csv/sal_10_31_2018.csv", header=FALSE, na.strings="", stringsAsFactors=FALSE)
+sal11<-sal11[-c(1:2),-1]
+colnames(sal11)<-sal_names
+View(sal11)
+
+sal12<-read.csv("H:/0_HarrisLab/1_CURRENT PROJECT FOLDERS/Dominion/01_new_dominion/surveys/hobo/data/2018/csv/sal_11_19_2018.csv", header=FALSE, na.strings="", stringsAsFactors=FALSE)
+sal12<-sal12[-c(1:2),-1]
+colnames(sal12)<-sal_names
+View(sal12)
+
+sal13<-read.csv("H:/0_HarrisLab/1_CURRENT PROJECT FOLDERS/Dominion/01_new_dominion/surveys/hobo/data/2018/csv/sal_01_18_2019.csv", header=FALSE, na.strings="", stringsAsFactors=FALSE)
+sal13<-sal13[-c(1:2),-c(1,8)]
+sal13$datetime<-paste0(sal13$V2, " ", sal13$V3)
+colnames(sal13)<-c("date", "time", "conductivity", "temperature", "sp_cond", "salinity", "datetime")
+View(sal13)
+
+#####Join HOBO data#####
+hobo_sal<-full_join(sal1,sal2) %>% 
+  full_join(., sal3) %>% 
+  full_join(., sal4) %>% 
+  full_join(., sal5) %>% 
+  full_join(., sal6) %>% 
+  full_join(., sal7) %>% 
+  full_join(., sal8) %>% 
+  full_join(., sal9) %>% 
+  full_join(., sal10) %>% 
+  full_join(., sal11) %>% 
+  full_join(., sal13) %>% 
+  select(-date, -time) #Joins all of the wl data with all columns and removes the date and time columns since they only exist in wl13
+View(hobo_sal)
+saveRDS(hobo_sal, "hobo_sal_2018.rds") #saves this as an r object that can be read in again later (more efficient than csv (the csv file was 4x as big!) for large data files)
+rm(sal1,sal2,sal3,sal4,sal5,sal6,sal7,sal8,sal9,sal10,sal11,sal12,sal13, hobo_sal)
+
+#####Join all HOBO data and continue to wrangle####
+hobo1<-readRDS("hobo_wl_2018.rds")
+hobo1<- hobo1 %>% 
+  separate(., datetime, sep=" ", into = c("date", "time")) %>% 
+  separate(., time, sep = ":", into = c("hours", "min", "sec"))
+hobo1$datetime<-paste0(hobo1$date, " ", hobo1$hours, ":", hobo1$min)
+hobo1$datetime<-mdy_hm(hobo1$datetime)
+hobo1<-hobo1 %>% 
+  select(datetime, kPA, temp, barokPA, depth)
+
+hobo2<-readRDS("hobo_sal_2018.rds")
+hobo2<- hobo2 %>% 
+  separate(., datetime, sep=" ", into = c("date", "time")) %>% 
+  separate(., time, sep = ":", into = c("hours", "min", "sec"))
+hobo2$datetime<-paste0(hobo2$date, " ", hobo2$hours, ":", hobo2$min)
+hobo2$datetime<-mdy_hm(hobo2$datetime)
+hobo2<-hobo2 %>% 
+  select(datetime, conductivity, temperature, sp_cond, salinity)
+
+hobo<-full_join(hobo1,hobo2)
+hobo<- hobo[order(hobo$datetime),]
+
+hobo2018<-hobo %>% 
+  filter(., datetime >= "2018-01-01 00:00:00") %>% 
+  filter(., datetime <= "2019-01-01 00:00:00")
+View(hobo2018)
+
+rm(hobo, hobo1, hobo2)
+
+hobo2018<-hobo2018 %>% 
+  convert(num("kPA","temp","barokPA","depth","conductivity","temperature", "sp_cond","salinity"))
+hobo2018$station<-"hobo"
+
+saveRDS(hobo2018, "hobo2018.rds")
+
+#####plot for Quick QA purposes#####
+a<-ggplot(hobo2018, aes(x=datetime))
+b<-a+geom_point(aes(y=depth),color="red")+geom_point(aes(y=salinity), color="blue")+
+  scale_x_datetime(limits = as.POSIXct(c("2018-10-01 00:00:00", "2019-01-01 00:00:00")))
+b
