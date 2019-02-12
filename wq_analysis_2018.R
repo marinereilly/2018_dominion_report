@@ -373,3 +373,5 @@ wq_2018_full<-readRDS("wq_2018_full.rds")
 wq_2018<-wq_2018_full %>% 
   select(datetime, station, depth_ft, depth_m, temperature, temp_wl, salinity, DO_mg )
 rm(wq_2018_full)
+weather_2018<-readRDS("weather_2018.rds")
+
