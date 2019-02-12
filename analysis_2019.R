@@ -310,3 +310,37 @@ saveRDS(hobo2018, "hobo2018.rds")
 a<-ggplot(hobo2018, aes(x=datetime))
 b<-a+geom_point(aes(y=depth),color="red")+geom_point(aes(y=salinity), color="blue")
 b
+
+rm(a,b)
+#####load YSI data#####
+mid_eagleio_2018 <- read.csv("H:/0_HarrisLab/1_CURRENT PROJECT FOLDERS/Dominion/01_new_dominion/surveys/ysi_noaa_wq_weather_tides/data/2018_mid_eagleio.csv", header=FALSE, stringsAsFactors=FALSE)
+mid_eagleio_2018<-mid_eagleio_2018[-c(1:3),-2]
+colnames(mid_eagleio_2018)<-c("datetime", "depth_ft", "DO_%", "DO_mg", "salinity", "spcond", "temperature")
+mid_eagleio_2018$station<-"mid"
+mid_eagleio_2018$datetime<-ymd_hms(mid_eagleio_2018$datetime)
+saveRDS(mid_eagleio_2018, "mid_eagleio_2018.rds")
+View(mid_eagleio_2018)
+
+north_eagleio_2018 <- read.csv("H:/0_HarrisLab/1_CURRENT PROJECT FOLDERS/Dominion/01_new_dominion/surveys/ysi_noaa_wq_weather_tides/data/2018_north_eagleio.csv", header=FALSE, stringsAsFactors=FALSE)
+north_eagleio_2018<-north_eagleio_2018[-c(1:3),-2]
+colnames(north_eagleio_2018)<-c("datetime", "depth_ft", "DO_%", "DO_mg", "salinity", "spcond", "temperature")
+north_eagleio_2018$station<-"north"
+north_eagleio_2018$datetime<-ymd_hms(north_eagleio_2018$datetime)
+saveRDS(north_eagleio_2018, "north_eagleio.rds")
+View(north_eagleio_2018)
+
+south_eagleio_2018 <- read.csv("H:/0_HarrisLab/1_CURRENT PROJECT FOLDERS/Dominion/01_new_dominion/surveys/ysi_noaa_wq_weather_tides/data/2018_south_eagleio.csv", header=FALSE, stringsAsFactors=FALSE)
+south_eagleio_2018<-south_eagleio_2018[-c(1:3),-2]
+colnames(south_eagleio_2018)<-c("datetime", "depth_ft", "DO_%", "DO_mg", "salinity", "spcond", "temperature")
+south_eagleio_2018$station<-"south"
+south_eagleio_2018$datetime<-ymd_hms(south_eagleio_2018$datetime)
+saveRDS(south_eagleio_2018, "south_eagleio_2018.rds")
+View(south_eagleio_2018)
+
+ysi2018<-north_eagleio_2018 %>% 
+  full_join(., mid_eagleio_2018) %>% 
+  full_join(., south_eagleio_2018)
+ysi2018<-ysi2018 %>% 
+  convert(num("depth_ft", "DO_%", "DO_mg", "salinity", "spcond", "temperature"))
+saveRDS(ysi2018, "ysi2018.rds")
+View(ysi2018)
