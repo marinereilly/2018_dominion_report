@@ -346,10 +346,12 @@ rm(mid_eagleio_2018,north_eagleio_2018,south_eagleio_2018)
 #####Combining ysi data and hobo data####
 #issues arise because there are two temperatures in the hobodata because of the two sensors
 #renameing some of the variables so that  they play nicely
+hobo2018<-readRDS("hobo2018.rds")
 hobo2018 <- hobo2018 %>% 
   rename(., depth_m =depth, spcond=sp_cond, temp_wl=temp)
 hobo2018$depth_ft<-hobo2018$depth_m*3.28084
-ysi2018$depth_m<-ysi2018$depth_ft*0.03048
+ysi2018<-readRDS("ysi2018.rds")
+ysi2018$depth_m<-ysi2018$depth_ft/3.28084
 
 wq2018<-ysi2018 %>% 
   full_join(., hobo2018)
@@ -373,5 +375,10 @@ wq_2018_full<-readRDS("wq_2018_full.rds")
 wq_2018<-wq_2018_full %>% 
   select(datetime, station, depth_ft, depth_m, temperature, temp_wl, salinity, DO_mg )
 rm(wq_2018_full)
+wq_2018$station<-as.factor(wq_2018$station)
 weather_2018<-readRDS("weather_2018.rds")
 
+a<-ggplot(wq_2018)+geom_point(aes(x=depth_ft, y=depth_m))
+a
+
+pairs(wq_2018)
