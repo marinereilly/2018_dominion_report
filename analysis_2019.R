@@ -356,5 +356,20 @@ wq2018<-ysi2018 %>%
 View(wq2018)
 saveRDS(wq2018, "wq_2018_full.rds")
 
+#####Loading weather data#####
+weather_2018 <- read.csv("H:/0_HarrisLab/1_CURRENT PROJECT FOLDERS/Dominion/01_new_dominion/surveys/ysi_noaa_wq_weather_tides/data/2018_weather_eaglio.csv", header=FALSE, stringsAsFactors=FALSE)
+weather_2018<-weather_2018[-c(1:3),]
+w_names<-c("datetime", "air_temp", "bp", "hail", "rainfall",
+           "rel_hum", "wind_dir", "wind_spd", "wind_max", "wind_min")
+colnames(weather_2018)<-w_names
+weather_2018$datetime<-ymd_hms(weather_2018$datetime)
+weather_2018<-weather_2018 %>% 
+  convert(num("air_temp", "bp", "hail", "rainfall", "rel_hum", "wind_dir", "wind_spd", "wind_max", "wind_min"))
+saveRDS(weather_2018, "weather_2018.rds")
+rm(w_names)
 #####Formatting for plots analysis etc.#####
 #load wq RDS
+wq_2018_full<-readRDS("wq_2018_full.rds")
+wq_2018<-wq_2018_full %>% 
+  select(datetime, station, depth_ft, depth_m, temperature, temp_wl, salinity, DO_mg )
+rm(wq_2018_full)
