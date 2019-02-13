@@ -370,7 +370,7 @@ weather_2018<-weather_2018 %>%
 saveRDS(weather_2018, "weather_2018.rds")
 rm(w_names)
 #####Formatting for plots analysis etc.#####
-#load wq RDS
+#load wq RDS and weather RDS
 wq_2018_full<-readRDS("wq_2018_full.rds")
 wq_2018<-wq_2018_full %>% 
   select(datetime, station, depth_ft, depth_m, temperature, temp_wl, salinity, DO_mg )
@@ -378,7 +378,5 @@ rm(wq_2018_full)
 wq_2018$station<-as.factor(wq_2018$station)
 weather_2018<-readRDS("weather_2018.rds")
 
-a<-ggplot(wq_2018)+geom_point(aes(x=depth_ft, y=depth_m))
-a
 
-pairs(wq_2018)
+
