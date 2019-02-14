@@ -35,9 +35,31 @@ wq_hourly_means$station <- as.factor(wq_hourly_means$station)
 saveRDS(wq_hourly_means, "wq_hourly_means.rds")
 
 ###Hypoxia instances###
+hypoxia<-wq_full %>% 
+  filter(DO_mg<= 4)
+saveRDS(hypoxia, "hypoxia_full.rds")
 
+wq_full$date<-date(wq_full$datetime)
+wq_full$hour<-hour(wq_full$datetime)
 
-View(wq_hourly_means)
-a<-ggplot(wq_hourly_means)+geom_point(aes(x=datetime, y=salinity, color=station))
-a
+hourly_hypoxia<-wq_full %>% 
+  select(date, hour, station, DO_mg) %>% 
+  group_by(station, date, hour) %>% 
+  summarise_if(is.numeric, mean, na.rm=TRUE) %>% 
+  filter(DO_mg<=4)
+hourly_hypoxia$datetime<-ymd_hm(paste0(hourly_hypoxia$date, " ", hourly_hypoxia$hour, ":00"))
+hourly_hypoxia$light<-if_else(hourly_hypoxia$hour<7|hourly_hypoxia$hour>19, "night", "day")
+saveRDS(hourly_hypoxia, "hourly_hypoxia.rds")
 
+daily_hypoxia<-wq_full %>% 
+  select(date, station, DO_mg) %>% 
+  group_by(station, date) %>% 
+  summarise_if(is.numeric, mean, na.rm=TRUE) %>% 
+  filter(DO_mg<=4)
+saveRDS(daily_hypoxia, "daily_hypoxia.rds")
+
+do_temp_hourly<-wq_full %>% 
+  select(date, hour, station, DO_mg, temperature, temp_wl) %>% 
+  group_by(station, date, hour) %>% 
+  summarise_if(is.numeric, mean, na.rm=TRUE)
+saveRDS(do_temp_hourly, "do_temp_hourly.rds")
