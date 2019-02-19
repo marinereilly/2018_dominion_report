@@ -10,7 +10,7 @@ weather_2018$month<-month(weather_2018$datetime)
 weather_2018$date<-date(weather_2018$datetime)
 weather_2018$hour<-hour(weather_2018$datetime)
 
-#####Cumulative Rainfall#####
+#####Cumulative Rainfall and Average Temperatures/Relative Humidity#####
 
 ###Cumulative Monthly Rainfall###
 
@@ -72,6 +72,27 @@ raindays<-count(hourly_rainfall, intensity) %>%
 saveRDS(raindays, "days-of-rain-by-hrs-intensity.rds")
 View(raindays)
 
+#Air Temperature from the Cbl Pier
+cblpier <- read.csv("C:/Users/Erin/Downloads/DataSetExport-1550239580564/DataSetExport-1550239580564.csv", header=FALSE, stringsAsFactors=FALSE)
+cblpier<-cblpier[-c(1:2),-c(3:5)]
+colnames(cblpier)<-c("datetime", "temperature")
+cblpier$datetime<-ymd_hms(cblpier$datetime)
+cblpier$date<-date(cblpier$datetime)
+cblpier$temperature<-as.numeric(cblpier$temperature)
+cbl_da<-cblpier %>% 
+  group_by(date) %>% 
+  summarise_if(is.numeric, mean)
+
+#####Wind Stuff Oh My#####
+weather_2018<-weather_2018 %>% 
+  mutate(season = case_when(
+    month == 1 | month == 2 | month == 12  ~    "winter",
+    month == 3 | month == 4 | month == 5   ~    "spring",
+    month == 6 | month == 7 | month == 8   ~    "summer",
+    month == 9 | month == 10 | month == 11 ~    "autumn"
+  ))
+
+ 
 
 ###For testing and QA purposes Pretty much ignore this
 View(daily_average_temp_rh)
@@ -90,12 +111,4 @@ b<-raindays %>%
   geom_bar(aes(x=date, y=n, fill=intensity), position="stack", stat="identity", width = 2)
 b
 
-cblpier <- read.csv("C:/Users/Erin/Downloads/DataSetExport-1550239580564/DataSetExport-1550239580564.csv", header=FALSE, stringsAsFactors=FALSE)
-cblpier<-cblpier[-c(1:2),-c(3:5)]
-colnames(cblpier)<-c("datetime", "temperature")
-cblpier$datetime<-ymd_hms(cblpier$datetime)
-cblpier$date<-date(cblpier$datetime)
-cblpier$temperature<-as.numeric(cblpier$temperature)
-cbl_da<-cblpier %>% 
-  group_by(date) %>% 
-  summarise_if(is.numeric, mean)
+
