@@ -212,7 +212,16 @@ plot_save("DO_Temp")
 ####
 
 a<-readRDS("hourly_hypoxia.rds")
-b<-ggplot(a)+
+a<-mutate(a, QAcode=case_when(
+  station=="mid" & date>=as.Date("2018-04-18") & date<=as.Date("2018-04-21")     ~ 1,
+  station=="south" & date>=as.Date("2018-06-09")& date<=as.Date("2018-06-16")    ~ 1,
+  station=="north" & date>=as.Date("2018-11-13")& date<=as.Date("2018-11-30")    ~ 1,
+  TRUE                                                                           ~ 0
+))
+
+b<-a %>% 
+  filter(QAcode==0) %>% 
+  ggplot(.)+
   geom_point(aes(x=date, y=hour, color=light))+
   geom_hline(aes(yintercept=12), color="black")+
   scale_x_date(date_breaks="months", date_labels= "%b")+
