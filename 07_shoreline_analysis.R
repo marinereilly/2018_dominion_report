@@ -159,6 +159,8 @@ d<-ggplot(b_slope, aes(x=Line, y=slope*365, fill=sign))+
             vjust=ifelse(b_slope$slope > 0, 1.5, -1), size=3.25)
 d
 
+plot_save("shoreline_trends_2018")
+
 a<-ggplot(beach, aes(x=Date, y=ref_MLW, color=Line))
 b<-a+geom_point()+geom_smooth(method = lm)
 b
@@ -170,8 +172,10 @@ c<-beach %>%
   geom_point(shape=24, fill="lightsalmon2")+
   geom_smooth(method=lm, alpha=0.5, color="lightsalmon2", linetype="dashed", se=FALSE)+
   ggtitle("The shoreline at Line 8 is retreating ~5.04 ft per year")+
-  ylab("Distance to MLW (ft)")+theme_minimal()
+  ylab("Distance to MLW (ft)")+theme_dominion()
 c
+plot_save("line8_2018")
+
 
 e<-beach %>% 
   filter(Line=="LINE 1") %>% 
@@ -179,8 +183,9 @@ e<-beach %>%
   geom_point(shape=24, fill="lightsalmon2")+
   geom_smooth(method=lm, alpha=0.5, color="lightsalmon2", linetype="dashed", se=FALSE)+
   ggtitle("The shoreline at Line 1 is increasing ~11.74 ft per year")+
-  ylab("Distance to MLW (ft)")+theme_minimal()
+  ylab("Distance to MLW (ft)")+theme_dominion()
 e
+plot_save("line1_2018")
 
 f<-beach %>% 
   filter(Line=="LINE 9") %>% 
@@ -188,8 +193,10 @@ f<-beach %>%
   geom_point(shape=24, fill="lightsalmon2")+
   geom_smooth(method=lm, alpha=0.5, color="lightsalmon2", linetype="dashed", se=FALSE)+
   ggtitle("The shoreline at Line 9 is retreating ~3.04 ft per year")+
-  ylab("Distance to MLW (ft)")+theme_minimal()
+  ylab("Distance to MLW (ft)")+theme_dominion()
 f
+plot_save("line9_2018")
+
 
 g<-beach %>% 
   filter(Line=="LINE 7") %>% 
@@ -197,8 +204,10 @@ g<-beach %>%
   geom_point(shape=24, fill="lightsalmon2")+
   geom_smooth(method=lm, alpha=0.5, color="lightsalmon2", linetype="dashed", se=FALSE)+
   ggtitle("The shoreline at Line 7 is retreating ~2.92 ft per year")+
-  ylab("Distance to MLW (ft)")+theme_minimal()
+  ylab("Distance to MLW (ft)")+theme_dominion()
 g
+plot_save("line7_2018")
+
 
 h<-beach %>% 
   filter(Line=="LINE 6") %>% 
@@ -206,8 +215,10 @@ h<-beach %>%
   geom_point(shape=24, fill="lightsalmon2")+
   geom_smooth(method=lm, alpha=0.5, color="lightsalmon2", linetype="dashed", se=FALSE)+
   ggtitle("The shoreline at Line 6 is retreating ~1.32 ft per year")+
-  ylab("Distance to MLW (ft)")+theme_minimal()
+  ylab("Distance to MLW (ft)")+theme_dominion()
 h
+plot_save("line6_2018")
+
 
 i<-beach %>% 
   filter(Line=="LINE 10") %>% 
@@ -215,5 +226,7 @@ i<-beach %>%
   geom_point(shape=24, fill="lightsalmon2")+
   geom_smooth(method=lm, alpha=0.5, color="lightsalmon2", linetype="dashed", se=FALSE)+
   ggtitle("The shoreline at Line 10 is retreating ~1.71 ft per year")+
-  ylab("Distance to MLW (ft)")+theme_minimal()
+  ylab("Distance to MLW (ft)")+theme_dominion()
 i
+plot_save("line10_2018")
+
