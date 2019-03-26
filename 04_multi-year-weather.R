@@ -170,6 +170,7 @@ high_season<-highseason %>%
   ungroup()
 saveRDS(high_season,"seasonal_highwind_freq_2010_2018.rds")
 
+
 rm(wind_zero)
 
 high_wind<-wind %>% 
