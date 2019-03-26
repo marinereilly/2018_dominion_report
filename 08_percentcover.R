@@ -101,4 +101,7 @@ d<-c %>%
 d
 ggsave(filename = "t6_pc2.eps", device="eps", width=114, height=52, units = "mm" )
 
-
+##### Method Comparison Plots
+p<-pc_sum %>% 
+ ggplot()+
+  geom_boxplot(aes(x=Transect, y=))
