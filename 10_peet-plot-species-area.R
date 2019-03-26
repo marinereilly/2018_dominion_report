@@ -51,3 +51,4 @@ peet_all<-peet_2012_2016 %>%
 saveRDS(peet_all, "peet_species_area_2012_2018.rds")
 rm(peet_2012_2016, peet_2017, peet_2018, species)
 
+
