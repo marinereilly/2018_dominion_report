@@ -1,5 +1,7 @@
 library(dplyr)
 library(ggplot2)
+library(purrr)
+library(tidyr)
 
 #####load data in 3 parts#####
 peet_2012_2016 <- read.csv("H:/0_HarrisLab/1_CURRENT PROJECT FOLDERS/Dominion/01_new_dominion/surveys/peet_plots/data/SpeciesArea.csv")
@@ -50,5 +52,70 @@ peet_all<-peet_2012_2016 %>%
   bind_rows(., peet_2017, peet_2018)
 saveRDS(peet_all, "peet_species_area_2012_2018.rds")
 rm(peet_2012_2016, peet_2017, peet_2018, species)
+
+#####make plots#####
+peet<-readRDS("peet_species_area_2012_2018.rds")
+
+make_curve<-function(df)
+  {
+  library(plyr)
+  library(broom)
+  ddply(df, "plot_id",
+        function(u){
+          r<-lm(log(species_num) ~ log(plot_size), data = u)
+          tidy(r) %>% 
+            select(-(std.error:p.value)) %>% 
+            spread(term, estimate)
+        })
+  }
+
+sa_model<-function(df){
+  lm(log(species_num) ~ log(plot_size), data = df)
+}
+
+peet_mod<-peet %>% 
+  group_by(plot, year) %>% 
+  nest()%>% 
+  mutate(model)
+  
+
+curves<-peet %>% 
+  mutate(plot_id=paste0(plot,"_",year)) %>% 
+  make_curve(.)
+View(curves)  
+
+curves<-curves %>% 
+  filter(!plot_id=="Plot A_2016") %>% 
+  filter(!plot_id=="Plot B_2013") %>% 
+  filter(!plot_id=="Plot C_2013")
+
+curves<-curves %>% 
+  separate(., col=plot_id, into = c("plot", "year"), sep = "_")
+
+colnames(curves)<-c("plot","year","intercept","l_plot_size")
+
+x_values <- seq(0, 40, 0.1)
+
+prepped <- curves %>% 
+  mutate(
+    x_values = map(seq_along(nrow(.)), ~x_values),
+    y_values = pmap(list(x_values, intercept, l_plot_size), 
+                    function(x_values, a, b) exp(a) * x_values ^ b))%>%
+  select(-intercept, -l_plot_size) %>%
+  unnest(x_values, y_values)%>%
+  group_nest(plot)
+
+sa_plots<-map2(prepped$plot, prepped$data, 
+               function(title, input){
+                 ggplot(input, aes(x = x_values, y = y_values, color = year)) +
+                   geom_line(size=1) +
+                   labs(title = title) +
+                   xlab("Plot Size m2") +
+                   ylab("Number of Species") +
+                   theme_classic()
+               })
+sa_plots
+
+
 
 
