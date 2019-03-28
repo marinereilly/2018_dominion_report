@@ -69,16 +69,6 @@ make_curve<-function(df)
         })
   }
 
-sa_model<-function(df){
-  lm(log(species_num) ~ log(plot_size), data = df)
-}
-
-peet_mod<-peet %>% 
-  group_by(plot, year) %>% 
-  nest()%>% 
-  mutate(model)
-  
-
 curves<-peet %>% 
   mutate(plot_id=paste0(plot,"_",year)) %>% 
   make_curve(.)
@@ -116,6 +106,38 @@ sa_plots<-map2(prepped$plot, prepped$data,
                })
 sa_plots
 
+#####Species number plots
 
 
+a<-peet %>% 
+  filter(plot_size==40) %>% 
+  ggplot()+
+  geom_bar(aes(x=year, y=species_num, fill=year), stat="identity", color="black")+
+  facet_wrap(plot~.)+ 
+  theme_dominion()+
+  xlab("Year")+
+  ylab("Number of Species")+
+  theme(strip.text.x = element_text(size=12, face="bold"),
+        strip.background = element_rect(fill="gainsboro"),
+        legend.position = "none")+
+  scale_fill_gradient(low = "hotpink", high = "purple4")+
+  ggtitle("Total PEET Plot Species by Year")
+a    
 
+ggsave("peet_sp_num.eps")
+
+curves$year<-as.numeric(curves$year)
+
+b<-curves %>% 
+  ggplot()+
+  geom_point(aes(x=year, y=l_plot_size), size=3)+
+  geom_line(aes(x=year, y=l_plot_size), size=1)+
+  facet_wrap(plot~.)+
+  theme_dominion()+
+  xlab("Year")+
+  ylab("Exponent")+
+  theme(strip.text.x = element_text(size=12, face="bold"),
+                     strip.background = element_rect(fill="gainsboro"))
+b
+
+ggsave("peet_exp.eps")
