@@ -158,3 +158,12 @@ pc_sum_hist<- pc_gath %>%
 pc_sum_hist
 plot_save("pc_method")
 
+
+#####Grubbs Outliers#####
+library(readxl)
+pc <- read_excel("H:/0_HarrisLab/1_CURRENT PROJECT FOLDERS/Dominion/01_new_dominion/surveys/percent_cover/data/2018_PercentCover.xlsx", sheet = "Plot Cover")
+
+#Don't do this... Grubbs assumes normality and we have non normal data
+#all the outliers are going to be plots with low percent covers becuase
+#the data skews up and there are areas with low percent coverage
+#they are representing the site not weird outliers
