@@ -176,6 +176,7 @@ c<-beach %>%
 c
 plot_save("line8_2018")
 
+
 e<-beach %>% 
   filter(Line=="LINE 1") %>% 
   ggplot(aes(x=Date, y=ref_MLW))+
@@ -185,7 +186,6 @@ e<-beach %>%
   ylab("Distance to MLW (ft)")+theme_dominion()
 e
 plot_save("line1_2018")
-
 
 f<-beach %>% 
   filter(Line=="LINE 9") %>% 
@@ -197,6 +197,7 @@ f<-beach %>%
 f
 plot_save("line9_2018")
 
+
 g<-beach %>% 
   filter(Line=="LINE 7") %>% 
   ggplot(aes(x=Date, y=ref_MLW))+
@@ -206,6 +207,7 @@ g<-beach %>%
   ylab("Distance to MLW (ft)")+theme_dominion()
 g
 plot_save("line7_2018")
+
 
 h<-beach %>% 
   filter(Line=="LINE 6") %>% 
@@ -217,6 +219,7 @@ h<-beach %>%
 h
 plot_save("line6_2018")
 
+
 i<-beach %>% 
   filter(Line=="LINE 10") %>% 
   ggplot(aes(x=Date, y=ref_MLW))+
@@ -226,3 +229,4 @@ i<-beach %>%
   ylab("Distance to MLW (ft)")+theme_dominion()
 i
 plot_save("line10_2018")
+
