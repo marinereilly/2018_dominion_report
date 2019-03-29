@@ -1,9 +1,6 @@
 #####Run First####
 library(dplyr)
-<<<<<<< HEAD
-=======
 library(tidyr)
->>>>>>> 5cb3cf239cd7d35f041fd1bf0f0ae0df670790d8
 library(ggplot2)
 
 theme_dominion<-function(){
@@ -29,20 +26,12 @@ theme_dominion<-function(){
 }
 
 plot_save<-function(filename){
-<<<<<<< HEAD
-  ggsave(as.character(paste0("/plots/",filename,".eps")), device=eps, width=8, height=6 )
-=======
-  ggsave(filename = as.character(paste0("plots/",filename,".eps")), device="eps", width=8, height=6 )
->>>>>>> 5cb3cf239cd7d35f041fd1bf0f0ae0df670790d8
+    ggsave(filename = as.character(paste0("plots/",filename,".eps")), device="eps", width=8, height=6 )
 }
 
 
-
-<<<<<<< HEAD
-cp_pal<-c("north"="#FF5765", "mid" = "#FFDB15", "south"="#8A6FDF", "weir"="#A8E10C")
-=======
 cp_pal<-c("north"="#FF5765", "mid" = "#FFDB15", "south"="#8A6FDF", "weir"="#A8E10C", "hobo"="#A8E10C", "kayak survey"="steelblue2")
->>>>>>> 5cb3cf239cd7d35f041fd1bf0f0ae0df670790d8
+
 year_color_highlight<-c("2018"="red3", "2017"="grey75", "2016"="grey75", "2015"="grey75",
                         "2014"="grey75", "2013"="grey75", "2012"="grey75", "2011"="grey75", 
                         "2010"="grey75", "2019"="darkblue")
@@ -56,7 +45,6 @@ pal9<-c("north"="#E69F00", "mid"="#F0E442", "south"="#009E73","depth_ft"="navy",
 
 ypal2018 <- c("2011"="#fde0dd", "2012"="#fcc5c0", "2013"="#fa9fb5", "2014"="#f768a1", 
               "2015"="#dd3497", "2016"="#ae017e", "2017"="#7a0177", "2018"="#49006a", 
-<<<<<<< HEAD
               "2010"="grey86")
 
 #####Now Load Data and plot!####
@@ -76,8 +64,8 @@ b<-ggplot(a)+
   scale_color_manual(values = year_color_highlight)+
   scale_size_manual(values = year_size_highlight)
 b
-=======
-              "2010"="grey86", "w"="chartruse4", "r"="deepskyblue2", "b"="navyblue")
+
+c("2010"="grey86", "w"="chartruse4", "r"="deepskyblue2", "b"="navyblue")
 
 #####Now Load Data and plot!####
 
@@ -532,4 +520,4 @@ b<-a %>%
   ggtitle("Salinity Pre and Post Restoration")+xlab("Date")+ylab("Mean Daily Salinity (ppt)")
 b    
 plot_save("salinity_timeline2")
->>>>>>> 5cb3cf239cd7d35f041fd1bf0f0ae0df670790d8
+
