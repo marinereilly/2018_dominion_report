@@ -4,12 +4,9 @@ library(lubridate)
 library(ggplot2)
 
 #####load data#####
-weather_2018<-readRDS("weather_2018.rds")
-<<<<<<< HEAD
+weather_2018<-readRDS("rds/weather_2018.rds")
 weather_2010_2017<-read.csv("H:/0_HarrisLab/1_CURRENT PROJECT FOLDERS/Dominion/01_new_dominion/surveys/ysi_noaa_wq_weather_tides/data/various_R_code/dominion_water_quality/Raw YSI Data/met_all.csv", stringsAsFactors=FALSE)
-=======
-weather_2010_2017<-readRDS("met_2010_2017.rds")
->>>>>>> 5cb3cf239cd7d35f041fd1bf0f0ae0df670790d8
+weather_2010_2017<-readRDS("rds/met_2010_2017.rds")
 
 #####Prep data for joining####
 colnames(weather_2018)
@@ -18,11 +15,9 @@ colnames(weather_2010_2017)
 weather_2010_2017<- weather_2010_2017 %>% 
   select(datetime=DateTime, air_temp=Air_Temp, bp=BP, hail=Hail, rainfall=Rainfall, 
          rel_hum=RH, wind_dir=Wind_Dir, wind_spd=Wind_spd, wind_max=Wind_Max, wind_min=Wind_Min)
-<<<<<<< HEAD
-weather_2010_2017$datetime<-ymd_hms(weather_2010_2017$datetime)
-=======
 
->>>>>>> 5cb3cf239cd7d35f041fd1bf0f0ae0df670790d8
+weather_2010_2017$datetime<-ymd_hms(weather_2010_2017$datetime)
+
 
 weather<-weather_2010_2017 %>% 
   full_join(weather_2018)
@@ -64,7 +59,7 @@ a<-daily_air_temp2 %>%
   geom_line(aes(x=date, y=air_temp, color=year))
 a
 
-saveRDS(water_year, "water_year_2010_2018.rds")
+saveRDS(water_year, "rds/water_year_2010_2018.rds")
 #####Monthly Rainfall####
 monthly_rainfall<-weather %>% 
   select(month, year, rainfall) %>% 
@@ -79,7 +74,7 @@ monthly_rainfall<-monthly_rainfall %>%
   group_by(year) %>% 
   mutate(cum_month=cumsum(rainfall))
 
-saveRDS(monthly_rainfall, "monthly_rainfall_2010_2018.rds")
+saveRDS(monthly_rainfall, "rds/monthly_rainfall_2010_2018.rds")
 
 #####Daily Average Temperatures####
 daily_air_temp <- weather %>% 
@@ -94,7 +89,7 @@ daily_air_temp<-daily_air_temp %>%
 
 
 
-saveRDS(daily_air_temp, "daily_air_temp_2010_2018.rds")
+saveRDS(daily_air_temp, "rds/daily_air_temp_2010_2018.rds")
 
 ####Storms#####
 r_storms<-weather %>% 
@@ -117,7 +112,7 @@ storms<-storms %>%
 s_weather<-storms %>% 
   select(datetime, code) %>% 
   full_join(weather, .)
-saveRDS(s_weather, "weather_2010_2018_storms.rds")
+saveRDS(s_weather, "rds/weather_2010_2018_storms.rds")
 ####Winds####
 wind<-weather %>% 
   select(datetime, wind_dir, wind_max, wind_spd, wind_min)

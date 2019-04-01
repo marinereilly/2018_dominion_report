@@ -211,7 +211,7 @@ plot_save("DO_Temp")
 
 ####
 
-a<-readRDS("hourly_hypoxia.rds")
+a<-readRDS(file = "rds/hourly_hypoxia.rds")
 a<-mutate(a, QAcode=case_when(
   station=="mid" & date>=as.Date("2018-04-18") & date<=as.Date("2018-04-21")     ~ 1,
   station=="south" & date>=as.Date("2018-06-09")& date<=as.Date("2018-06-16")    ~ 1,
@@ -271,7 +271,7 @@ d
 
 #####Multi-year plots are hopefully fixed!####
 #Water Year
-a<-readRDS("water_year_2010_2018.rds")
+a<-readRDS("rds/water_year_2010_2018.rds")
 b<-a %>% 
   filter(!water_year=="2010") %>%
   ggplot(.) + 

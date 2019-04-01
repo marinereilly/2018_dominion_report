@@ -42,10 +42,10 @@ c
 
 ######Plot rain v MW ratio####
 #load the weather data#
-wyb<-readRDS("water_year_2010_2018b.rds")
-wy<-readRDS("water_year_2010_2018.rds")
-monrain<-readRDS("monthly_rainfall_2010_2018.rds")
-met<-readRDS("weather_2010_2018.rds")
+wyb<-readRDS("rds/water_year_2010_2018b.rds")
+wy<-readRDS("rds/water_year_2010_2018.rds")
+monrain<-readRDS("rds/monthly_rainfall_2010_2018.rds")
+met<-readRDS("rds/weather_2010_2018.rds")
 
 
 flight_month_rain<-monrain %>% 
@@ -105,7 +105,7 @@ cum_rain<-met %>%
   group_by(date, month, year,day) %>% 
   summarise(daily_rain=sum(rainfall))
 cum_rain$water_year<-if_else(cum_rain$month<10, 
-                              cum_rain$year, cum_rain2$year+1)
+                              cum_rain$year, cum_rain$year+1)
 cum_rain2<-cum_rain %>% 
   group_by(water_year) %>% 
   arrange(date) %>% 
