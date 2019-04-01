@@ -138,6 +138,8 @@ method_names<-c("sq_code"="Squares Method",
                 "spring"="Spring", 
                 "summer"="Summer")
 
+pc_gath$coverage<-factor(pc_gath$coverage, levels = c("0", "<1", "1-2", "2-5", "5-10", "10-25","25-50","50-75","75-95","95-100"))
+
 pc_sum_hist<- pc_gath %>% 
   #filter(season=="summer") %>% 
   ggplot(.)+
