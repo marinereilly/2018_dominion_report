@@ -330,7 +330,7 @@ c
 plot_save("cum_monthly_rainfall_2011_2018")
 
 ###Daily Air Temperatures
-a<-readRDS("daily_air_temp_2010_2018.rds")
+a<-readRDS("rds/daily_air_temp_2010_2018.rds")
 a$year<-as.factor(a$year)
 b<-ggplot(a, aes(x=doy, y=air_temp, color=year))+
   geom_point(size=0.7)+
@@ -340,7 +340,7 @@ b<-ggplot(a, aes(x=doy, y=air_temp, color=year))+
   theme_dominion()+
   guides(color=guide_legend(title="Year"),
          size=guide_legend(title="Year"))+
-  ggitle("Daily Air Temperatures")+
+  ggtitle("Daily Air Temperatures")+
 b
 
 c<-ggplot(a,aes(x = as.Date(lubridate::yday(date), "1970-01-01"), y=air_temp, color=year))+
@@ -358,7 +358,7 @@ c
 plot_save("air_temperatures_2010_2018")
 
 ###WIND!
-a<-readRDS("wind_beaufort_scale_2010_2018.rds")
+a<-readRDS("rds/wind_beaufort_scale_2010_2018.rds")
 library(viridis)
 a<-ungroup(a)
 

@@ -44,6 +44,16 @@ salinity2<-wq %>%
   summarize(salinity=mean(salinity))
 saveRDS(salinity2, "mean_daily_station_salinity2010_2018.rds")
 
+####depth daily averages####
+wq<-readRDS(file = "rds/wq_2010_2018.rds")
+View(wq)
+depth<-wq %>% 
+  select(date, station, depth_ft,) %>% 
+  group_by(date, station) %>% 
+  summarize(depth=mean(depth_ft))
+
+
+
 ###Hourly DO averages###
 hypoxia<-wq %>% 
   select(date, hour, station, DO_mg) %>% 

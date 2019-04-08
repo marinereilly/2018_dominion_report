@@ -521,3 +521,19 @@ b<-a %>%
 b    
 plot_save("salinity_timeline2")
 
+#####Depth Timeline#####
+wq<-readRDS(file = "rds/wq_daily_means.rds")
+
+a<-depth %>% 
+  filter(!station=="hobo") %>%
+  filter(!depth>=4) %>% 
+  filter(!depth<=-3) %>% 
+  ggplot()+
+  geom_line(aes(x=date, y=depth, color=station), size=1)+
+  theme_dominion()+
+  scale_color_manual(values=cp_pal)+
+  ylab("Depth (ft)")+
+  ggtitle("Dominion Marsh Depth 2010-2018")
+  
+a
+ggsave("depth2010-2018.pdf")
